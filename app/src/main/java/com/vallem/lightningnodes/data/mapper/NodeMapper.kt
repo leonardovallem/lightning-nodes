@@ -36,4 +36,4 @@ fun NodeDto.toDomain() = run {
 
 private val sasBtcRatio = BigDecimal("100000000")
 
-private fun SasCount.toBtc() = toBigDecimal().div(sasBtcRatio)
+private fun SasCount.toBtc() = toBigDecimal().divide(sasBtcRatio)

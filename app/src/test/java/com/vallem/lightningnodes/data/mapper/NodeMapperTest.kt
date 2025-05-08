@@ -1,6 +1,7 @@
 package com.vallem.lightningnodes.data.mapper
 
 import assertk.assertThat
+import assertk.assertions.isEqualTo
 import assertk.assertions.isNotNull
 import assertk.assertions.isNull
 import assertk.assertions.prop
@@ -83,5 +84,12 @@ class NodeMapperTest {
         val result = dto.toDomain()
 
         assertThat(result).isNotNull().prop(Node::location).isNotNull()
+    }
+
+    @Test
+    fun `given valid fields, when toDomain is called, then created Node should have correctly calculated bitcoin count`() {
+        val dto = sampleNodeDto(capacity = 550_000.0)
+        val result = dto.toDomain()
+        assertThat(result).isNotNull().prop(Node::capacity).isEqualTo("0.0055".toBigDecimal())
     }
 }
