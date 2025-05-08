@@ -1,0 +1,20 @@
+package com.vallem.lightningnodes.data.repository
+
+import com.vallem.lightningnodes.data.mapper.toDomain
+import com.vallem.lightningnodes.data.model.NodeDto
+import com.vallem.lightningnodes.data.source.remote.ConnectivityApi
+import com.vallem.lightningnodes.domain.repository.NodeRepository
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.withContext
+
+class NodeRepositoryImpl(
+    private val connectivityApi: ConnectivityApi,
+    private val ioDispatcher: CoroutineDispatcher = Dispatchers.IO,
+) : NodeRepository {
+    override suspend fun retrieveNodes() = withContext(ioDispatcher) {
+        runCatching {
+            connectivityApi.retrieveRanking().mapNotNull(NodeDto::toDomain)
+        }
+    }
+}

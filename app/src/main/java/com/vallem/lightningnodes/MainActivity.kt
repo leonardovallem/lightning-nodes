@@ -5,6 +5,7 @@ import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import com.vallem.lightningnodes.di.NetworkModule
+import com.vallem.lightningnodes.di.RepositoryModule
 import com.vallem.lightningnodes.di.UtilModule
 import com.vallem.lightningnodes.ui.theme.LightningNodesTheme
 import org.koin.android.ext.koin.androidContext
@@ -18,7 +19,7 @@ class MainActivity : ComponentActivity() {
 
         startKoin {
             androidContext(this@MainActivity)
-            modules(NetworkModule, UtilModule)
+            modules(NetworkModule, UtilModule, RepositoryModule)
         }
 
         setContent {

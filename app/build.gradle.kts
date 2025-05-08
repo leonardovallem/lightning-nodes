@@ -47,7 +47,10 @@ dependencies {
     implementation(libs.retrofit)
     implementation(libs.retrofit.kotlinx.serialization)
     implementation(libs.koin)
+
     testImplementation(libs.assertk)
+    testImplementation(libs.mockk)
+    testImplementation(libs.kotlinx.coroutines.test)
 
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
