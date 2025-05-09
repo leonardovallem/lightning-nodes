@@ -7,7 +7,7 @@ import androidx.activity.enableEdgeToEdge
 import com.vallem.lightningnodes.di.NetworkModule
 import com.vallem.lightningnodes.di.RepositoryModule
 import com.vallem.lightningnodes.di.UtilModule
-import com.vallem.lightningnodes.ui.theme.LightningNodesTheme
+import com.vallem.lightningnodes.presentation.theme.LightningNodesTheme
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
 import org.koin.core.context.stopKoin

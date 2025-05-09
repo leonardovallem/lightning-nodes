@@ -6,7 +6,9 @@ import com.vallem.lightningnodes.domain.model.Language
 import com.vallem.lightningnodes.domain.model.Node
 import com.vallem.lightningnodes.domain.model.NodeLocation
 import java.math.BigDecimal
-import java.time.LocalDate
+import java.time.Instant
+import java.time.LocalDateTime
+import java.util.TimeZone
 
 fun NodeDto.toDomain() = run {
     val mandatoryFields = listOf(
@@ -28,10 +30,15 @@ fun NodeDto.toDomain() = run {
         alias = alias!!,
         channels = channels!!,
         capacity = capacity!!.toBtc(),
-        firstSeen = LocalDate.ofEpochDay(firstSeen!!),
-        updatedAt = LocalDate.ofEpochDay(updatedAt!!),
+        firstSeen = firstSeen!!.toLocalDateTime(),
+        updatedAt = updatedAt!!.toLocalDateTime(),
         location = NodeLocation(city = translatedCity, country = translatedCountry)
     )
+}
+
+private fun Long.toLocalDateTime(): LocalDateTime {
+    val instant = Instant.ofEpochSecond(this)
+    return LocalDateTime.ofInstant(instant, TimeZone.getDefault().toZoneId())
 }
 
 private val sasBtcRatio = BigDecimal("100000000")

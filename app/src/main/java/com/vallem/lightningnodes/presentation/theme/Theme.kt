@@ -1,4 +1,4 @@
-package com.vallem.lightningnodes.ui.theme
+package com.vallem.lightningnodes.presentation.theme
 
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
