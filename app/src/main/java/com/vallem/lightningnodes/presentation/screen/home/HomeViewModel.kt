@@ -22,14 +22,14 @@ class HomeViewModel(
     private var refreshJob: Job? = null
 
     init {
-        refresh()
+        refresh(UiState.Loading.Initial)
     }
 
-    fun refresh() {
+    fun refresh(loading: UiState.Loading = UiState.Loading.Refresh) {
         refreshJob?.cancel()
 
         refreshJob = viewModelScope.launch(coroutineDispatcher) {
-            _uiState.value = UiState.Loading
+            _uiState.value = loading
 
             nodeRepository.retrieveNodes()
                 .onSuccess {

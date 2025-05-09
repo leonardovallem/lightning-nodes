@@ -4,7 +4,9 @@ import androidx.annotation.VisibleForTesting
 import androidx.compose.animation.Crossfade
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.pulltorefresh.PullToRefreshBox
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Modifier
@@ -24,41 +26,50 @@ import org.koin.androidx.compose.koinViewModel
 fun HomeScreen(viewModel: HomeViewModel = koinViewModel()) {
     val uiState by viewModel.uiState.collectAsStateWithLifecycle()
 
-    HomeScreen(uiState = uiState)
+    HomeScreen(uiState = uiState, onRefresh = viewModel::refresh)
 }
 
+@OptIn(ExperimentalMaterial3Api::class)
 @VisibleForTesting
 @Composable
-fun HomeScreen(uiState: UiState<List<Node>>, modifier: Modifier = Modifier) {
+fun HomeScreen(uiState: UiState<List<Node>>, onRefresh: () -> Unit, modifier: Modifier = Modifier) {
     Scaffold(modifier = modifier) { pv ->
-        Crossfade(
-            targetState = uiState,
+        PullToRefreshBox(
+            isRefreshing = uiState == UiState.Loading.Refresh,
+            onRefresh = onRefresh,
             modifier = Modifier
                 .padding(pv)
-                .testTag("crossfade")
+                .fillMaxSize()
         ) {
-            when (it) {
-                is UiState.Success<List<Node>> -> NodesList(
-                    nodes = it.data,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .testTag("nodes-list")
-                )
+            Crossfade(
+                targetState = uiState,
+                modifier = Modifier
+                    .matchParentSize()
+                    .testTag("crossfade")
+            ) {
+                when (it) {
+                    is UiState.Success<List<Node>> -> NodesList(
+                        nodes = it.data,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .testTag("nodes-list")
+                    )
 
-                is UiState.Failure -> LoadingErrorDisplay(
-                    error = it.throwable as NetworkingException,
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .testTag("error-display")
-                )
+                    is UiState.Failure -> LoadingErrorDisplay(
+                        error = it.throwable as NetworkingException,
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .testTag("error-display")
+                    )
 
-                UiState.Loading -> NodesListSkeleton(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .testTag("nodes-list-skeleton")
-                )
+                    is UiState.Loading -> NodesListSkeleton(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .testTag("nodes-list-skeleton")
+                    )
 
-                UiState.Idle -> Unit
+                    UiState.Idle -> Unit
+                }
             }
         }
     }
@@ -68,6 +79,6 @@ fun HomeScreen(uiState: UiState<List<Node>>, modifier: Modifier = Modifier) {
 @Composable
 private fun HomeScreenPreview() {
     LightningNodesTheme {
-        HomeScreen(UiState.Idle)
+        HomeScreen(UiState.Idle, {})
     }
 }
