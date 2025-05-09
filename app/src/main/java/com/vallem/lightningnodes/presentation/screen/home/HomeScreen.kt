@@ -17,7 +17,6 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.testTag
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.vallem.lightningnodes.data.source.remote.NetworkingException
 import com.vallem.lightningnodes.domain.model.Node
@@ -55,7 +54,6 @@ fun HomeScreen(uiState: UiState<List<Node>>, onRefresh: () -> Unit, modifier: Mo
             ScrollToTopButton(
                 isVisible = shouldShouldScrollButton,
                 onClick = { scope.launch { listState.fastScrollToTop() } },
-                modifier = Modifier.padding(24.dp)
             )
         },
         floatingActionButtonPosition = FabPosition.Center,
