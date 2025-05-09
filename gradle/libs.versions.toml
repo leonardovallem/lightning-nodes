@@ -36,6 +36,7 @@ koin = { module = "io.insert-koin:koin-android", version.ref = "koin" }
 mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
 kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version = "1.10.2" }
 robolectric = { module = "org.robolectric:robolectric", version = "4.14" }
+turbine = { module = "app.cash.turbine:turbine", version = "1.2.0" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }
