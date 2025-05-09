@@ -9,7 +9,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.LazyListState
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -23,8 +25,9 @@ import java.math.BigDecimal
 import java.time.LocalDateTime
 
 @Composable
-fun NodesList(nodes: List<Node>, modifier: Modifier = Modifier) {
+fun NodesList(nodes: List<Node>, listState: LazyListState, modifier: Modifier = Modifier) {
     LazyColumn(
+        state = listState,
         verticalArrangement = Arrangement.spacedBy(12.dp),
         contentPadding = PaddingValues(24.dp),
         modifier = modifier
@@ -112,6 +115,7 @@ private fun NodesListPreview() {
     LightningNodesTheme {
         NodesList(
             nodes = nodes,
+            listState = rememberLazyListState(),
             modifier = Modifier
                 .background(MaterialTheme.colorScheme.surface)
                 .fillMaxSize()
