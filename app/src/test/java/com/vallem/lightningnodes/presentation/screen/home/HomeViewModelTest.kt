@@ -11,6 +11,8 @@ import io.mockk.coEvery
 import io.mockk.coVerify
 import io.mockk.impl.annotations.RelaxedMockK
 import io.mockk.mockk
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import kotlinx.coroutines.test.StandardTestDispatcher
 import org.junit.After
 import org.junit.Before
@@ -53,11 +55,11 @@ class HomeViewModelTest {
 
     @Test
     fun `given data retrieval success, when refresh is called, then uiState is updated with success`() {
-        coEvery { nodeRepository.retrieveNodes() } returns Result.success(emptyList())
+        coEvery { nodeRepository.retrieveNodes() } returns Result.success(persistentListOf())
 
         sut.refresh()
         dispatcher.scheduler.advanceUntilIdle()
 
-        assertThat(sut.uiState.value).isInstanceOf<UiState.Success<List<Node>>>()
+        assertThat(sut.uiState.value).isInstanceOf<UiState.Success<ImmutableList<Node>>>()
     }
 }

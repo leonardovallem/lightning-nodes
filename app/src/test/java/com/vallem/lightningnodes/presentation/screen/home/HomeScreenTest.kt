@@ -7,6 +7,7 @@ import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.vallem.lightningnodes.TestApplication
 import com.vallem.lightningnodes.data.source.remote.UnknownNetworkingException
 import com.vallem.lightningnodes.presentation.util.UiState
+import kotlinx.collections.immutable.persistentListOf
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -21,7 +22,7 @@ class HomeScreenTest {
     @Test
     fun `given uiState is Idle, when HomeScreen is rendered, then nothing should be rendered`() {
         composeTestRule.setContent {
-            HomeScreen(uiState = UiState.Idle)
+            HomeScreen(uiState = UiState.Idle, onRefresh = {})
         }
 
         composeTestRule.onNodeWithTag("crossfade")
@@ -32,7 +33,7 @@ class HomeScreenTest {
     @Test
     fun `given uiState is Loading, when HomeScreen is rendered, then only skeleton should be rendered`() {
         composeTestRule.setContent {
-            HomeScreen(uiState = UiState.Loading)
+            HomeScreen(uiState = UiState.Loading.Refresh, onRefresh = {})
         }
 
         composeTestRule.onNodeWithTag("nodes-list-skeleton").assertExists()
@@ -43,7 +44,7 @@ class HomeScreenTest {
     @Test
     fun `given uiState is Failure, when HomeScreen is rendered, then only error display should be rendered`() {
         composeTestRule.setContent {
-            HomeScreen(uiState = UiState.Failure(UnknownNetworkingException()))
+            HomeScreen(uiState = UiState.Failure(UnknownNetworkingException()), onRefresh = {})
         }
 
         composeTestRule.onNodeWithTag("error-display").assertExists()
@@ -54,7 +55,7 @@ class HomeScreenTest {
     @Test
     fun `given uiState is Success, when HomeScreen is rendered, then only error display should be rendered`() {
         composeTestRule.setContent {
-            HomeScreen(uiState = UiState.Success(emptyList()))
+            HomeScreen(uiState = UiState.Success(persistentListOf()), onRefresh = {})
         }
 
         composeTestRule.onNodeWithTag("nodes-list").assertExists()

@@ -5,6 +5,7 @@ import androidx.lifecycle.viewModelScope
 import com.vallem.lightningnodes.domain.model.Node
 import com.vallem.lightningnodes.domain.repository.NodeRepository
 import com.vallem.lightningnodes.presentation.util.UiState
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
@@ -16,7 +17,7 @@ class HomeViewModel(
     private val nodeRepository: NodeRepository,
     private val coroutineDispatcher: CoroutineDispatcher = Dispatchers.Unconfined,
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow<UiState<List<Node>>>(UiState.Idle)
+    private val _uiState = MutableStateFlow<UiState<ImmutableList<Node>>>(UiState.Idle)
     val uiState = _uiState.asStateFlow()
 
     private var refreshJob: Job? = null
@@ -32,14 +33,8 @@ class HomeViewModel(
             _uiState.value = loading
 
             nodeRepository.retrieveNodes()
-                .onSuccess {
-                    println("success = $it")
-                    _uiState.value = UiState.Success(it)
-                }
-                .onFailure {
-                    println("failure = $it")
-                    _uiState.value = UiState.Failure(it)
-                }
+                .onSuccess { _uiState.value = UiState.Success(it) }
+                .onFailure { _uiState.value = UiState.Failure(it) }
         }
     }
 }

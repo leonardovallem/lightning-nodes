@@ -23,11 +23,13 @@ import androidx.compose.ui.unit.dp
 import com.vallem.lightningnodes.domain.model.Node
 import com.vallem.lightningnodes.domain.model.NodeLocation
 import com.vallem.lightningnodes.presentation.theme.LightningNodesTheme
+import kotlinx.collections.immutable.ImmutableList
+import kotlinx.collections.immutable.persistentListOf
 import java.math.BigDecimal
 import java.time.LocalDateTime
 
 @Composable
-fun NodesList(nodes: List<Node>, listState: LazyListState, modifier: Modifier = Modifier) {
+fun NodesList(nodes: ImmutableList<Node>, listState: LazyListState, modifier: Modifier = Modifier) {
     LazyColumn(
         state = listState,
         verticalArrangement = Arrangement.spacedBy(12.dp),
@@ -78,7 +80,7 @@ private const val SKELETON_NODES_COUNT = 5
 @Composable
 private fun NodesListPreview() {
     val nodes = remember {
-        listOf(
+        persistentListOf(
             Node(
                 "public key",
                 "alias",

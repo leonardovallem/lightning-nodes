@@ -28,6 +28,7 @@ import com.vallem.lightningnodes.presentation.theme.LightningNodesTheme
 import com.vallem.lightningnodes.presentation.util.UiState
 import com.vallem.lightningnodes.presentation.util.extension.fastScrollToTop
 import com.vallem.lightningnodes.presentation.util.extension.isScrolledPastTop
+import kotlinx.collections.immutable.ImmutableList
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.koinViewModel
 
@@ -41,7 +42,7 @@ fun HomeScreen(viewModel: HomeViewModel = koinViewModel()) {
 @OptIn(ExperimentalMaterial3Api::class)
 @VisibleForTesting
 @Composable
-fun HomeScreen(uiState: UiState<List<Node>>, onRefresh: () -> Unit, modifier: Modifier = Modifier) {
+fun HomeScreen(uiState: UiState<ImmutableList<Node>>, onRefresh: () -> Unit, modifier: Modifier = Modifier) {
     val listState = rememberLazyListState()
     val scope = rememberCoroutineScope()
 
@@ -73,7 +74,7 @@ fun HomeScreen(uiState: UiState<List<Node>>, onRefresh: () -> Unit, modifier: Mo
                     .testTag("crossfade")
             ) {
                 when (it) {
-                    is UiState.Success<List<Node>> -> NodesList(
+                    is UiState.Success<ImmutableList<Node>> -> NodesList(
                         nodes = it.data,
                         listState = listState,
                         modifier = Modifier

@@ -5,6 +5,7 @@ import com.vallem.lightningnodes.data.mapper.toFriendlyException
 import com.vallem.lightningnodes.data.model.NodeDto
 import com.vallem.lightningnodes.data.source.remote.ConnectivityApi
 import com.vallem.lightningnodes.domain.repository.NodeRepository
+import kotlinx.collections.immutable.toPersistentList
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
@@ -16,7 +17,10 @@ class NodeRepositoryImpl(
 ) : NodeRepository {
     override suspend fun retrieveNodes() = withContext(ioDispatcher) {
         try {
-            val nodes = connectivityApi.retrieveRanking().mapNotNull(NodeDto::toDomain)
+            val nodes = connectivityApi.retrieveRanking()
+                .mapNotNull(NodeDto::toDomain)
+                .toPersistentList()
+
             Result.success(nodes)
         } catch (exception: HttpException) {
             Result.failure(exception.toFriendlyException())

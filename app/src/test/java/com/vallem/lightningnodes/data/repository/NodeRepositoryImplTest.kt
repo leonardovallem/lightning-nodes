@@ -16,6 +16,7 @@ import io.mockk.clearAllMocks
 import io.mockk.coEvery
 import io.mockk.impl.annotations.MockK
 import io.mockk.mockk
+import kotlinx.collections.immutable.PersistentList
 import kotlinx.coroutines.test.StandardTestDispatcher
 import kotlinx.coroutines.test.runTest
 import org.junit.After
@@ -49,7 +50,7 @@ class NodeRepositoryImplTest {
 
             val result = sut.retrieveNodes()
 
-            assertThat(result).prop(Result<List<Node>>::isFailure).isTrue()
+            assertThat(result).prop(Result<PersistentList<Node>>::isFailure).isTrue()
         }
 
     @Test

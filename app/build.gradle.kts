@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.retrofit.kotlinx.serialization)
     implementation(libs.koin)
     implementation(libs.material.extended.icons)
+    implementation(libs.kotlinx.collections.immutable)
 
     debugImplementation(libs.okhttp.logging.interceptor)
 
