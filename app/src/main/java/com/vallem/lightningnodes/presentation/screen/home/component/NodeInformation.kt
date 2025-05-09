@@ -1,7 +1,13 @@
 package com.vallem.lightningnodes.presentation.screen.home.component
 
+import androidx.compose.animation.core.InfiniteTransition
+import androidx.compose.animation.core.rememberInfiniteTransition
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.height
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.outlined.Place
 import androidx.compose.material.icons.rounded.Autorenew
@@ -14,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
@@ -27,6 +34,7 @@ import com.vallem.lightningnodes.presentation.screen.home.component.NodeInformat
 import com.vallem.lightningnodes.presentation.screen.home.component.NodeInformation.FirstSeenDate
 import com.vallem.lightningnodes.presentation.screen.home.component.NodeInformation.Location
 import com.vallem.lightningnodes.presentation.screen.home.component.NodeInformation.UpdateDate
+import com.vallem.lightningnodes.presentation.screen.home.modifier.shimmer
 import com.vallem.lightningnodes.presentation.util.extension.toHumanReadableFormat
 import java.time.LocalDateTime
 
@@ -44,6 +52,32 @@ fun NodeInformation(information: NodeInformation, modifier: Modifier = Modifier)
             style = information.textStyle,
             overflow = TextOverflow.MiddleEllipsis,
             maxLines = 1,
+        )
+    }
+}
+
+@Composable
+fun NodeInformationSkeleton(
+    modifier: Modifier = Modifier,
+    transition: InfiniteTransition = rememberInfiniteTransition(label = ""),
+) {
+    Row(
+        horizontalArrangement = Arrangement.spacedBy(12.dp),
+        verticalAlignment = Alignment.CenterVertically,
+        modifier = modifier
+    ) {
+        Box(
+            modifier = Modifier
+                .clip(RoundedCornerShape(30))
+                .shimmer(transition = transition)
+                .size(24.dp)
+        )
+
+        Box(
+            modifier = Modifier
+                .shimmer(transition = transition)
+                .height(20.dp)
+                .weight(1f)
         )
     }
 }

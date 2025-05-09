@@ -49,9 +49,17 @@ fun NodesListSkeleton(modifier: Modifier = Modifier) {
                 .padding(24.dp)
         ) {
             repeat(SKELETON_NODES_COUNT) {
-
+                NodeSkeleton(modifier = Modifier.fillMaxWidth())
             }
         }
+    }
+}
+
+@Preview
+@Composable
+private fun NodesListSkeletonPreview() {
+    LightningNodesTheme {
+        NodesListSkeleton(modifier = Modifier.fillMaxSize())
     }
 }
 
