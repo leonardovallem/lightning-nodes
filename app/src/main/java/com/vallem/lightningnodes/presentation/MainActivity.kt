@@ -8,6 +8,7 @@ import com.vallem.lightningnodes.di.NetworkModule
 import com.vallem.lightningnodes.di.RepositoryModule
 import com.vallem.lightningnodes.di.UtilModule
 import com.vallem.lightningnodes.di.ViewModelModule
+import com.vallem.lightningnodes.presentation.screen.home.HomeScreen
 import com.vallem.lightningnodes.presentation.theme.LightningNodesTheme
 import org.koin.android.ext.koin.androidContext
 import org.koin.core.context.startKoin
@@ -25,6 +26,7 @@ class MainActivity : ComponentActivity() {
 
         setContent {
             LightningNodesTheme {
+                HomeScreen()
             }
         }
     }

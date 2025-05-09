@@ -17,7 +17,7 @@ android {
         versionName = "1.0"
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
-        buildConfigField("String", "BASE_URL", "\"https://mempool.space/api\"")
+        buildConfigField("String", "BASE_URL", "\"https://mempool.space/api/\"")
     }
 
     buildTypes {
@@ -53,6 +53,8 @@ dependencies {
     implementation(libs.retrofit.kotlinx.serialization)
     implementation(libs.koin)
     implementation(libs.material.extended.icons)
+
+    debugImplementation(libs.okhttp.logging.interceptor)
 
     testImplementation(libs.assertk)
     testImplementation(libs.mockk)
