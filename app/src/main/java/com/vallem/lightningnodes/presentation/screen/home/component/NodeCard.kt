@@ -42,7 +42,10 @@ fun NodeCard(node: Node, modifier: Modifier = Modifier) {
     val clipboard = LocalClipboard.current
     val scope = rememberCoroutineScope { Dispatchers.IO }
 
-    Card(modifier = modifier) {
+    Card(
+        shape = MaterialTheme.shapes.small,
+        modifier = modifier
+    ) {
         Column(
             verticalArrangement = Arrangement.spacedBy(4.dp),
             modifier = Modifier.padding(24.dp)
