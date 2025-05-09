@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
 import androidx.compose.ui.text.AnnotatedString
 import androidx.compose.ui.text.TextStyle
@@ -45,7 +46,7 @@ fun NodeInformation(information: NodeInformation, modifier: Modifier = Modifier)
         verticalAlignment = Alignment.CenterVertically,
         modifier = modifier
     ) {
-        Icon(imageVector = information.icon, contentDescription = null)
+        Icon(imageVector = information.icon, contentDescription = null, tint = information.iconTint)
 
         Text(
             text = information.text,
@@ -133,4 +134,13 @@ private val NodeInformation.textStyle: TextStyle
         is Channels, is Capacity -> MaterialTheme.typography.bodyLarge
         is Location -> MaterialTheme.typography.bodyMedium
         is FirstSeenDate, is UpdateDate -> MaterialTheme.typography.bodySmall
+    }
+
+private val NodeInformation.iconTint: Color
+    get() = when (this) {
+        is Channels -> Color(0xFFFCCA46)
+        is Capacity -> Color(0xFFFF9900)
+        is Location -> Color(0xFF6A7FDB)
+        is FirstSeenDate -> Color(0xFF00C49A )
+        is UpdateDate -> Color(0xFFA80874)
     }
