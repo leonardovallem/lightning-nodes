@@ -8,6 +8,7 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.rounded.WarningAmber
+import androidx.compose.material3.FilledTonalButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
@@ -27,11 +28,15 @@ import com.vallem.lightningnodes.data.source.remote.UnknownNetworkingException
 import com.vallem.lightningnodes.presentation.theme.LightningNodesTheme
 
 @Composable
-fun LoadingErrorDisplay(error: NetworkingException, modifier: Modifier = Modifier) {
+fun LoadingErrorDisplay(
+    error: NetworkingException,
+    onRetry: () -> Unit,
+    modifier: Modifier = Modifier
+) {
     Column(
         verticalArrangement = Arrangement.spacedBy(24.dp, Alignment.CenterVertically),
         horizontalAlignment = Alignment.CenterHorizontally,
-        modifier = modifier
+        modifier = modifier.padding(24.dp)
     ) {
         Icon(
             imageVector = Icons.Rounded.WarningAmber,
@@ -44,6 +49,10 @@ fun LoadingErrorDisplay(error: NetworkingException, modifier: Modifier = Modifie
             text = error.message,
             textAlign = TextAlign.Center
         )
+
+        FilledTonalButton(onClick = onRetry) {
+            Text(text = "Try again")
+        }
     }
 }
 
@@ -67,7 +76,7 @@ private fun LoadingErrorDisplayPreview() {
                 .padding(24.dp)
         ) {
             exceptions.forEach {
-                LoadingErrorDisplay(it, Modifier.fillMaxWidth())
+                LoadingErrorDisplay(it, {}, Modifier.fillMaxWidth())
                 HorizontalDivider()
             }
         }

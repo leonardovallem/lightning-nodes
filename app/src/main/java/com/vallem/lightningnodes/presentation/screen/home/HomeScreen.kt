@@ -84,6 +84,7 @@ fun HomeScreen(uiState: UiState<ImmutableList<Node>>, onRefresh: () -> Unit, mod
 
                     is UiState.Failure -> LoadingErrorDisplay(
                         error = it.throwable as NetworkingException,
+                        onRetry = onRefresh,
                         modifier = Modifier
                             .fillMaxSize()
                             .testTag("error-display")

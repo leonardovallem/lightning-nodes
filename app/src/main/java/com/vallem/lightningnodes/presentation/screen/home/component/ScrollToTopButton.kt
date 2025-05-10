@@ -59,7 +59,7 @@ fun ScrollToTopButton(
                 contentColor = MaterialTheme.colorScheme.onPrimaryContainer
             )
         ) {
-            Text(text = "Voltar ao topo")
+            Text(text = "Go to top")
             Spacer(modifier = Modifier.width(12.dp))
             Icon(imageVector = Icons.Rounded.ArrowUpward, contentDescription = null)
         }
