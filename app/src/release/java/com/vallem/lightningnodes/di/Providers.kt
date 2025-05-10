@@ -1,3 +1,5 @@
 package com.vallem.lightningnodes.di
 
-fun provideOkHttpLoggingInterceptor() = null
+import okhttp3.logging.HttpLoggingInterceptor
+
+fun provideOkHttpLoggingInterceptor(): HttpLoggingInterceptor? = null

@@ -22,7 +22,9 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            signingConfig = signingConfigs.getByName("debug")
+
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -53,9 +55,8 @@ dependencies {
     implementation(libs.retrofit.kotlinx.serialization)
     implementation(libs.koin)
     implementation(libs.material.extended.icons)
+    implementation(libs.okhttp.logging.interceptor)
     implementation(libs.kotlinx.collections.immutable)
-
-    debugImplementation(libs.okhttp.logging.interceptor)
 
     testImplementation(libs.assertk)
     testImplementation(libs.mockk)
